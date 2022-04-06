@@ -1,0 +1,2058 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>
+    
+      Tutorial: Build a real-world flight simulator from scratch in 30 minutes | WRLD3D
+    
+  </title>
+
+  <style type="text/css">
+    
+    .bg_load { position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; background: #1D1D1D; z-index: 999; }
+
+.spinner { z-index: 1000; position: fixed; top: calc(50% - 50px); left: calc(50% - 50px); font-size: 100px; width: 1em; height: 1em; border-radius: 50%; background: #123456; box-shadow: inset 0 0 0 0.12em rgba(0, 0, 0, 0.2), 0 0 0 0.12em rgba(255, 255, 255, 0.1); background: -webkit-linear-gradient(#0071BC 50%, #ffffff 50%), -webkit-linear-gradient(#ffffff 50%, #0071BC 50%); background: -webkit-linear-gradient(#0071BC 50%, #ffffff 50%), -webkit-linear-gradient(#ffffff 50%, #0071BC 50%); background: linear-gradient(#0071BC 50%, #ffffff 50%), linear-gradient(#ffffff 50%, #0071BC 50%); background-size: 50% 100%, 50% 100%; background-position: 0 0, 100% 0; background-repeat: no-repeat; opacity: 0.7; -webkit-animation: mask 3s infinite alternate; animation: mask 3s infinite alternate; }
+
+.spinner:after { content: ""; position: absolute; border: 0.12em solid rgba(255, 255, 255, 0.3); position: absolute; top: 25%; left: 25%; width: 50%; height: 50%; border-radius: inherit; }
+
+@-webkit-keyframes mask { 0% { }
+  25% { -webkit-transform: rotate(270deg); }
+  50% { -webkit-transform: rotate(90deg); }
+  75% { -webkit-transform: rotate(360deg); }
+  100% { -webkit-transform: rotate(180deg); } }
+
+@keyframes mask { 0% { }
+  25% { -webkit-transform: rotate(270deg);
+    transform: rotate(270deg); }
+  50% { -webkit-transform: rotate(90deg);
+    transform: rotate(90deg); }
+  75% { -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); }
+  100% { -webkit-transform: rotate(180deg);
+    transform: rotate(180deg); } }
+
+#intercom-container { z-index: 9998 !important; }
+
+.cc-window { min-height: 80px; }
+
+  </style>
+
+  
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-21564666-11', 'auto');
+  ga('send', 'pageview');
+  var trackOutboundLink = function(url) {
+     ga('send', 'event', 'outbound', 'click', url, {'hitCallback':
+       function () {
+        document.location = url;
+       }
+     });
+  }
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-PHSV6WS');</script>
+  <!-- End Google Tag Manager -->
+
+
+  
+<script type="text/javascript"> _linkedin_data_partner_id = "108507"; </script><script type="text/javascript"> (function(){var s = document.getElementsByTagName("script")[0]; var b = document.createElement("script"); b.type = "text/javascript";b.async = true; b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js"; s.parentNode.insertBefore(b, s);})(); </script> <noscript> <img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=108507&fmt=gif" /> </noscript>
+
+
+  
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1690586194566045'); 
+fbq('track', 'PageView');
+</script>
+<noscript>
+<img height="1" width="1" 
+src="https://www.facebook.com/tr?id=1690586194566045&ev=PageView
+&noscript=1"/>
+</noscript>
+
+
+  
+<script>
+!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='//static.ads-twitter.com/uwt.js',
+a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+// Insert Twitter Pixel ID and Standard Event data below
+twq('init','nvdfj');
+twq('track','PageView');
+</script>
+
+
+  
+<script type="text/javascript" src="//script.crazyegg.com/pages/scripts/0072/0233.js" async="async"></script>
+
+
+  
+<!--Adding sales force GCLID code on site-->
+<script type="text/javascript">
+function setCookie(name, value, days){
+    var date = new Date();
+    date.setTime(date.getTime() + (days*24*60*60*1000));
+    var expires = "; expires=" + date.toGMTString();
+    document.cookie = name + "=" + value + expires;
+}
+function getParam(p){
+    var match = RegExp('[?&]' + p + '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+}
+var gclid = getParam('gclid');
+if(gclid){
+    var gclsrc = getParam('gclsrc');
+    if(!gclsrc || gclsrc.indexOf('aw') !== -1){
+        setCookie('gclid', gclid, 90);
+    }
+}
+</script>
+
+
+
+  
+    
+      <link href='https://d33wubrfki0l68.cloudfront.net/bundles/b69aae5435ce9df1f5ed4d6b5e59109e3028c8a5.css' rel='stylesheet'/>
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+  <link rel='preload' as='style' onload='this.onload=null;this.rel="stylesheet"' href='//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css' />
+  <noscript>
+    <link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css'>
+  </noscript>
+
+
+    
+      
+  <link as='style' href='https://d33wubrfki0l68.cloudfront.net/css/d930646049f9aaa768e73496b2a0ca59f1fb77e8/css/bootstrap-social.css' onload='this.onload=null;this.rel="stylesheet"' rel='preload'/>
+  <noscript>
+    <link href='https://d33wubrfki0l68.cloudfront.net/css/d930646049f9aaa768e73496b2a0ca59f1fb77e8/css/bootstrap-social.css' rel='stylesheet'/>
+  </noscript>
+
+
+    
+      
+  <link as='style' href='https://d33wubrfki0l68.cloudfront.net/css/48d9ec23344cf5b1e5958fb1aa6efbaf0166a6ee/css/bootstrap-responsive-tabs.css' onload='this.onload=null;this.rel="stylesheet"' rel='preload'/>
+  <noscript>
+    <link href='https://d33wubrfki0l68.cloudfront.net/css/48d9ec23344cf5b1e5958fb1aa6efbaf0166a6ee/css/bootstrap-responsive-tabs.css' rel='stylesheet'/>
+  </noscript>
+
+
+    
+      
+  <link as='style' href='https://d33wubrfki0l68.cloudfront.net/css/19131ceb9378d9e3f4cc600cc8780f84c93e0c50/css/cookieconsent.min.css' onload='this.onload=null;this.rel="stylesheet"' rel='preload'/>
+  <noscript>
+    <link href='https://d33wubrfki0l68.cloudfront.net/css/19131ceb9378d9e3f4cc600cc8780f84c93e0c50/css/cookieconsent.min.css' rel='stylesheet'/>
+  </noscript>
+
+
+    
+  
+
+  
+
+  
+    
+      <link rel='preload' as='style' onload='this.onload=null;this.rel="stylesheet"' href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&display=swap' />
+      <noscript>
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&display=swap" />
+      </noscript>
+    
+      <link rel='preload' as='style' onload='this.onload=null;this.rel="stylesheet"' href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&display=swap' />
+      <noscript>
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&display=swap" />
+      </noscript>
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@wrld3d" />
+  <meta name="twitter:creator" content="@wrld3d" />
+
+  
+  <meta name="twitter:title" content="Tutorial: Build a real-world flight simulator from scratch in 30 minutes" />
+  
+
+  
+  <meta name="twitter:description" content="Follow this tutorial to learn how you can build a real world flight simulator using the WRLD Unity SDK in just 30 minutes.">
+  
+
+  
+
+  
+
+  <link type="application/atom+xml" rel="alternate" href="https://www.wrld3d.com/feed.xml" title="WRLD3D" />
+
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Tutorial: Build a real-world flight simulator from scratch in 30 minutes" />
+<meta name="author" content="Oliver Norton" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Follow this tutorial to learn how you can build a real world flight simulator using the WRLD Unity SDK in just 30 minutes." />
+<meta property="og:description" content="Follow this tutorial to learn how you can build a real world flight simulator using the WRLD Unity SDK in just 30 minutes." />
+<link rel="canonical" href="https://www.wrld3d.com/blog/tutorial-build-a-real-world-flight-simulator-from-scratch-in-30-minutes/" />
+<meta property="og:url" content="https://www.wrld3d.com/blog/tutorial-build-a-real-world-flight-simulator-from-scratch-in-30-minutes/" />
+<meta property="og:site_name" content="WRLD3D" />
+<meta property="og:image" content="https://www.wrld3d.com/img/uploads/blog_flightsim.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-03-12T10:01:00-07:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.wrld3d.com/img/uploads/blog_flightsim.png" />
+<meta property="twitter:title" content="Tutorial: Build a real-world flight simulator from scratch in 30 minutes" />
+<meta name="google-site-verification" content="g8cQP8fWrfIqpPhxPWHvxYbIYe1wnai1U5vMBFUd5LI" />
+<meta name="msvalidate.01" content="E01EE58B79EE8894E07C12F1851431FA" />
+<meta name="yandex-verification" content="453a28623b75e03c" />
+<script type="application/ld+json">
+{"description":"Follow this tutorial to learn how you can build a real world flight simulator using the WRLD Unity SDK in just 30 minutes.","headline":"Tutorial: Build a real-world flight simulator from scratch in 30 minutes","dateModified":"2019-03-12T10:01:00-07:00","datePublished":"2019-03-12T10:01:00-07:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.wrld3d.com/blog/tutorial-build-a-real-world-flight-simulator-from-scratch-in-30-minutes/"},"url":"https://www.wrld3d.com/blog/tutorial-build-a-real-world-flight-simulator-from-scratch-in-30-minutes/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://www.wrld3d.com/img/wrld-logo-small.png"},"name":"Oliver Norton"},"author":{"@type":"Person","name":"Oliver Norton"},"image":"https://www.wrld3d.com/img/uploads/blog_flightsim.png","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <script>
+    window.__external = {"email":"https://accounts.wrld3d.com/api/v1/intercom/messages/enquiry_message","download_wrld_guide":"https://fj3u3pkvh3.execute-api.us-west-2.amazonaws.com/production","register_lead":"https://vh263sihrc.execute-api.us-west-2.amazonaws.com/production/register"};
+    window.__stage = "production";
+  </script>
+
+  <script>
+    /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+
+  </script>
+</head>
+
+
+  <body>
+    
+
+    
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PHSV6WS"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+
+    
+  <script type="text/javascript" src="https://secure.hims1nice.com/js/150755.js" ></script>
+  <noscript><img alt="" src="https://secure.hims1nice.com/150755.png?trk_user=150755&trk_tit=jsdisabled&trk_ref=jsdisabled&trk_loc=jsdisabled" height="0px" width="0px" style="display:none;" /></noscript>
+
+
+    <script>
+  (function() {
+    var TARGET_DOMAIN = 'wrld3d.com',
+        COOKIE_LIFE = 365;
+    var setCookie = function(name, value, days){
+      var date = new Date();
+      date.setTime(date.getTime() + (days*24*60*60*1000));
+      var expires = "; expires=" + date.toGMTString();
+      document.cookie = name + "=" + value + "; path=/; domain=." + TARGET_DOMAIN + expires;
+    };
+
+    var getParam = function(p){
+      var match = RegExp('[?&]' + p + '=([^&]*)').exec(window.location.search);
+      return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+    };
+
+    var utms = {},
+        hasUTMs = false,
+        utmKeys = [
+          'utm_source',
+          'utm_medium',
+          'utm_campaign',
+          'utm_term',
+          'utm_content'
+        ];
+
+    for(var i = 0; i < utmKeys.length; i++) {
+      var utmKey = utmKeys[i],
+          utmParamVal = getParam(utmKey);
+
+      if (utmParamVal !== null) {
+        utms[utmKey] = utmParamVal;
+        hasUTMs = true;
+      }
+    }
+
+    if (hasUTMs) {
+      var encodedUtms = encodeURIComponent(JSON.stringify(utms));
+      setCookie('utm', encodedUtms, COOKIE_LIFE);
+    }
+  })();
+</script>
+
+
+    <nav id="menu" class="navbar navbar-default navbar-fixed-top navbar-custom top-nav-short">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://www.wrld3d.com"><img src="https://d33wubrfki0l68.cloudfront.net/6f8d38a78de6fa1c4ac71abb43cb60bf92b5df03/595ca/img/wrld_logo_white.svg"/></a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li class="navlinks-container">
+            <a class="navlinks-parent" href="javascript:void(0)">Platform</a>
+            <div class="navlinks-children">
+              
+                
+                  
+
+
+
+
+
+
+<a href="/3d-maps/">3D Maps</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/3d-maps/custom-maps">Custom Maps</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/3d-maps/wrld-web-app">WRLD on the Web</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/3d-maps/wrld-mobile-app">WRLD on Mobile</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/3d-maps/map-designer">Map Designer</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/3d-maps/mapping-data">Mapping Data</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/3d-maps/faq">FAQ</a>
+
+                
+              
+            </div>
+          </li>
+        
+        
+        
+          <li class="navlinks-container">
+            <a class="navlinks-parent" href="javascript:void(0)">Indoors</a>
+            <div class="navlinks-children">
+              
+                
+                  
+
+
+
+
+
+
+<a href="/3d-maps/indoor-mapping">Indoor Mapping</a>
+
+                
+              
+            </div>
+          </li>
+        
+        
+        
+          <li class="navlinks-container">
+            <a class="navlinks-parent" href="javascript:void(0)">Industries</a>
+            <div class="navlinks-children">
+              
+                
+                  
+
+
+
+
+
+
+<a href="/solutions">Industry Solutions</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/internet-of-things">Internet of Things</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/retail">Retail</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/commercial-real-estate">Commercial Real Estate</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/smart-workplace">Smart Workplace</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/travel">Travel</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/application-showcase">Application Showcase</a>
+
+                
+              
+            </div>
+          </li>
+        
+        
+        
+          <li class="navlinks-container">
+            <a class="navlinks-parent" href="javascript:void(0)">Developers</a>
+            <div class="navlinks-children">
+              
+                
+                  
+
+
+
+
+
+
+<a href="/developers">Developers</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/wrld.js/latest/docs/examples/">Javascript Maps</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/unity/latest/docs/examples/">Unity SDK</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/android/latest/docs/examples/">Android SDK</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/ios/latest/docs/examples/">iOS SDK</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/3d-maps/virtual-reality-maps">Virtual Reality Maps</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/3d-maps/augmented-reality-3d-maps">Augmented Reality Maps</a>
+
+                
+              
+            </div>
+          </li>
+        
+        
+        
+          <li class="navlinks-container">
+            <a class="navlinks-parent" href="javascript:void(0)">Pricing</a>
+            <div class="navlinks-children">
+              
+                
+                  
+
+
+
+
+
+
+<a href="/pricing/developers">Developers</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/pricing/services">WRLD Building Service</a>
+
+                
+              
+            </div>
+          </li>
+        
+        
+        
+          <li class="navlinks-container">
+            <a class="navlinks-parent" href="javascript:void(0)">Company</a>
+            <div class="navlinks-children">
+              
+                
+                  
+
+
+
+
+
+
+<a href="/company/about-us">About Us</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/company/press/">Press</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/company/events/">Events</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/blog/">Blog</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/company/open-source">Open Source</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/jobs/">Jobs</a>
+
+                
+              
+                
+                  
+
+
+
+
+
+
+<a href="/contact-us">Contact Us</a>
+
+                
+              
+            </div>
+          </li>
+        
+        
+        <li id="sign-in">
+          <a href="https://accounts.wrld3d.com/users/sign_in" title="Sign in" class="sign-in">
+            Sign in
+          </a>
+        </li>
+        <li id="sign-up">
+          <a href="https://accounts.wrld3d.com/users/sign_up?plan=starter" title="Sign up" class="sign-up">
+            Sign up
+          </a>
+        </li>
+        <li id="my-account" style="display: none">
+          <a href="https://mapdesigner.wrld3d.com/portal/latest/" title="My Account" class="user-account">
+            <i class="al-icon-fa fa fa-user logout"></i>
+          </a>
+        </li>
+        <li id="sign-out" style="display: none">
+          <a href="https://accounts.wrld3d.com/signout" title="Sign Out" class="user-logout">
+            <i class="al-icon-fa fa fa-sign-out"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    
+    <div id="page">
+    
+
+      
+
+  
+
+  <header class="header-section ">
+    
+
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="post-heading">
+              <h1>Tutorial: Build a real-world flight simulator from scratch in 30 minutes</h1>
+    		      
+    		      
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  </header>
+
+
+
+<div class="container">
+  <div class="row form-group">
+    <div class="col-md-12">
+      <span class="post-meta">
+        By
+        
+          Oliver Norton
+        
+        on March 12, 2019
+        
+        |
+          
+            <a href="/blog/category/blog/" class="btn btn-info btn-xs">blog</a>
+
+          
+        
+      </span>
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-md-12">
+
+      
+      
+      <article role="main" class="blog-post">
+        <h2 id="overview">Overview</h2>
+
+<p>In this post we’re going to show you how to create a real world Flight Simulator using the WRLD SDK. The WRLD SDK provides streamed 3D models of the real world so we’re going to spend most of this post teaching you how to create an aircraft with a simple flight model and a controller for the camera to follow the aircraft.</p>
+
+<p>The amount of coding required to do this is pretty light - less than 25 lines once you ignore the Unity boilerplate and the explanatory comments.
+ Here’s a video showing what you could build:</p>
+
+<div align="center">
+<iframe src="https://player.vimeo.com/video/322879428" width="640" height="360" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+</div>
+
+<p>While the flight and camera models we give here are pretty basic they should give you a solid basis for building something more sophisticated. At the end of the post we’ll give you suggestions for directions you could take this without too much effort. If there’s sufficient interest we’ll dig into some of these in future posts!</p>
+
+<h2 id="before-you-start">Before you start</h2>
+<p>To follow along with this tutorial you’re going to need the following:</p>
+
+<ul>
+  <li>
+    <p><strong>Unity</strong> 2018.1.0f2 or later, running on Windows or macOS (<a href="https://unity3d.com/get-unity/download">available here</a>)</p>
+  </li>
+  <li>
+    <p><strong>WRLD Unity SDK</strong> 0.7 or later (<a href="https://wrld3d.com/unity/latest/docs/examples/">available here</a>)</p>
+  </li>
+  <li>
+    <p>A <strong>WRLD account</strong> (<a href="https://accounts.wrld3d.com/users/sign_up">sign up for a trial here</a>)</p>
+  </li>
+  <li>
+    <p><strong>wrld-flight-simulator-tutorial.zip</strong> file containing the assets and code for this tutorial (<a href="https://www.wrld3d.com/img/uploads/wrld-flight-simulator-tutorial.zip">available here</a>)</p>
+  </li>
+</ul>
+
+<h2 id="create-a-unity-project-and-import-the-wrld-sdk">Create a Unity project and import the WRLD SDK</h2>
+
+<p>First we need to create a fresh Unity project for Flight Simulator and import the WRLD Unity SDK into it as an asset.</p>
+
+<p>Once you’ve done this, your project will have access to streamed 3D models of the real world.</p>
+
+<ol>
+  <li>
+    <p>Open Unity and create a new Project using the 3D template, give it a name (I called mine “Flight Simulator”) and click Create Project.</p>
+  </li>
+  <li>
+    <p>Add the WRLD SDK to your new project. This is covered in our <strong>Getting Started Instructions</strong>  <a href="https://wrld3d.com/unity/latest/docs/examples/">here</a>. These instructions guide you through the process of adding the WRLD SDK Asset to your Project, signing up for a WRLD account and creating an API Key for your Project.</p>
+  </li>
+</ol>
+
+<p>When you add the Unity SDK to your project you will be asked whether you want to increase the <strong>Shadow Distance</strong> settings, you should answer <strong>Increase</strong> to this question. The reason for this is that real world environments are typically larger than a traditional game level and consequently we want to see shadows over a larger distance.</p>
+
+<h2 id="first-run---welcome-to-san-francisco">First Run - Welcome to San Francisco</h2>
+
+<p>By the time you reach the end of the Getting Started instructions, you should have the <strong>UnityWorldSpace</strong> scene open in Unity. When you press Unity’s Play button you should see the model for downtown San Francisco stream into view.</p>
+
+<p>The WRLD SDK comes with simple camera controls out of the box so you can click drag to move around and explore the environment.</p>
+
+<p>Once you’re done exploring press the Play button again to stop the project running. Throughout the rest of this post you’ll need to <strong>stop the project running before you continue with the tutorial</strong>. If you don’t do this, any changes you make will be temporary and will be reverted when you stop the project. So get it into the habit of stopping the project before moving on.</p>
+
+<p>Now use <strong>File → Save Scene as…</strong>, and save the Scene as “FlightSimulatorScene”
+.</p>
+
+<p><img src="https://www.wrld3d.com/img/uploads/wrld-flight-simulator-first-run.png" alt="" /></p>
+
+<h2 id="adding-an-aircraft">Adding an Aircraft</h2>
+<p>Now that we have the world in our Project, we need to create an aircraft to fly around it. We’ll use a Unity GameObject to represent the Aircraft.</p>
+
+<h3 id="importing-the-aircraft-mesh">Importing the aircraft mesh</h3>
+<p>In the zip file for this tutorial we have provided a textured aircraft mesh that you can use. Here’s how to import it into your Project:</p>
+
+<ol>
+  <li>
+    <p>Unzip the <strong>wrld-flight-simulator-tutorial.zip</strong> file somewhere on your hard drive.</p>
+  </li>
+  <li>
+    <p>Choose <strong>Assets → Import New Asset…</strong> from the Unity menu.</p>
+  </li>
+  <li>
+    <p>Navigate to the folder where you unzipped <strong>wrld-flight-simulator-tutorial.zip</strong>, go to the <strong>models</strong> directory, choose the <strong>SpaceJet.DAE</strong> file and click <strong>Import</strong>.</p>
+  </li>
+  <li>
+    <p>You should now see a new asset in your Project’s <strong>Assets</strong> folder called <strong>SpaceJet</strong>.</p>
+  </li>
+</ol>
+
+<p><img src="https://www.wrld3d.com/img/uploads/wrld-flight-simulator-import-mesh.png" alt="" /></p>
+
+<h3 id="adding-the-aircraft-to-your-scene">Adding the aircraft to your Scene</h3>
+<p>Now that you have the aircraft mesh in your Project you need to add it the Flight Simulator Scene.</p>
+
+<ol>
+  <li>
+    <p>Open the SpaceJet asset by clicking the small arrow button to the right of it. This shows a selection of Assets that Unity created for us when importing the model.</p>
+  </li>
+  <li>
+    <p>We just want the mesh asset which is the one on the far right, click-drag it into your scene just below the <strong>WrldMap</strong> Object.</p>
+  </li>
+  <li>
+    <p>Click on the <strong>SpaceJet</strong> in the <strong>Scene</strong> view to select it.</p>
+  </li>
+  <li>
+    <p>Rename it from SpaceJet to <strong>Aircraft</strong>.</p>
+  </li>
+  <li>
+    <p>Now in the Inspector window on the right we need to set the aircraft’s initial position and scale:</p>
+
+    <ul>
+      <li>
+        <p>Set the <strong>Position</strong> to <strong>0, 500, -500</strong></p>
+      </li>
+      <li>
+        <p>Set <strong>Scale</strong> to <strong>5, 5, 5</strong></p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Now press Play again and you should see a bright pink aircraft sitting over San Francisco.</p>
+  </li>
+</ol>
+
+<p><img src="https://www.wrld3d.com/img/uploads/wrld-flight-simulator-static-aircraft-over-city.png" alt="" /></p>
+
+<p>The WRLD SDK uses metres as its unit of measurement and in this scene the positive Y axis points upwards from the ground, so our aircraft is 500 metres above the ground.</p>
+
+<h3 id="make-the-aircraft-look-more-realistic-with-a-texture-and-a-material">Make the aircraft look more realistic with a texture and a material</h3>
+<p>Let’s add a texture to the aircraft to make it look a bit more realistic. This is a three step process:</p>
+<ul>
+  <li>
+    <p>Import the texture.</p>
+  </li>
+  <li>
+    <p>Create a new Material that uses the texture.</p>
+  </li>
+  <li>
+    <p>Apply the Material to our aircraft object.</p>
+  </li>
+</ul>
+
+<h4 id="import-the-texture">Import the texture</h4>
+<ol>
+  <li>
+    <p>Import Choose <strong>Assets → Import New Asset…</strong> from the Unity menu.</p>
+  </li>
+  <li>
+    <p>Navigate to the folder where you unzipped <strong>wrld-flight-simulator-tutorial.zip</strong>, go to the <strong>models/texture</strong> directory, choose the <strong>SpaceJet_AlbedoTransparency_Blue.png</strong> file and click <strong>Import</strong> to import the texture.</p>
+  </li>
+  <li>
+    <p>You should now see the texture appear in your Project’s Assets folder.</p>
+  </li>
+</ol>
+
+<p><img src="https://www.wrld3d.com/img/uploads/wrld-flight-simulator-import-texture.png" alt="" /></p>
+
+<h4 id="create-a-material-to-apply-the-texture">Create a Material to apply the texture</h4>
+<ol>
+  <li>
+    <p>Next we need to create a Material to apply the texture to our aircraft.</p>
+  </li>
+  <li>
+    <p>Select <strong>Assets → Create → Material</strong> from the Unity menu. Give the new material a descriptive name like “SpaceJetMaterial”</p>
+  </li>
+  <li>
+    <p>Now click on the new Material to select it, then in the <strong>Inspector</strong> window click the small “target” icon next to the <strong>Albedo</strong> field to choose the texture to use. Choose the <strong>SpaceJet_AlbedoTransparency_Blue</strong> texture that we imported in step 2 above.</p>
+  </li>
+</ol>
+
+<p><img src="https://www.wrld3d.com/img/uploads/wrld-flight-simulator-setup-material.png" alt="" /></p>
+
+<h4 id="apply-the-material-to-the-aircraft">Apply the Material to the aircraft</h4>
+<ol>
+  <li>
+    <p>Click on the <strong>Aircraft</strong> object in the scene view to select it.</p>
+  </li>
+  <li>
+    <p>In the <strong>Inspector window</strong> on the right, go to <strong>Mesh Renderer → Materials</strong> and click the target icon next to <strong>Element 0</strong>.</p>
+  </li>
+  <li>
+    <p>Now choose the <strong>SpaceJetMaterial</strong> we created above.</p>
+  </li>
+  <li>
+    <p>Press <strong>Play</strong> and you should see the aircraft rendered more realistically with a blue and grey texture.</p>
+  </li>
+</ol>
+
+<p><img src="https://www.wrld3d.com/img/uploads/wrld-flight-simulator-texture-on-aircraft.png" alt="" /></p>
+
+<h2 id="making-our-aircraft-move-with-a-physics-based-flight-model">Making our aircraft move with a physics based flight model</h2>
+
+<p>Now that we have our aircraft looking pretty realistic and positioned in the world we need to get it moving. We’re going to do this by attaching a flight model to the Aircraft GameObject. This flight model will take inputs from the player and use them to move the Aircraft around.</p>
+
+<p>Now flight models are a deep subject and they can get pretty complicated. It’s certainly possible to build a sophisticated flight model that accurately simulates a real world aircraft. You might find a flight model like this in a dedicated training simulator used to train airline pilots.</p>
+
+<p>But, in our case we’re not striving for physically accurate modelling of the pilot experience. We want something that looks pretty realistic, is quick to code and is easy for players to pick up and play. This means that our flight model can be much simpler.</p>
+
+<h2 id="applying-physics-to-our-aircraft">Applying physics to our aircraft</h2>
+
+<p>We’re going to use Unity’s rigid body physics simulation as the basis for our flight model. In this model our aircraft will be represented by a physical entity with a limited set of properties like “mass”. Then we’ll move that physical entity around by applying forces to it based on the player’s input.</p>
+
+<p>The physical properties that we are going to add to our aircraft are represented by Unity’s RigidBody component so in order to add physics to our aircraft, all we need to do is attach a RigidBody component to it like this.</p>
+
+<ol>
+  <li>
+    <p>Click on aircraft in the Scene view to select it.</p>
+  </li>
+  <li>
+    <p>In the <strong>Inspector</strong> view, click <strong>Add Component</strong> at the bottom of the aircraft’s components.</p>
+  </li>
+  <li>
+    <p>Choose <strong>Physics → Rigidbody</strong> from the menu.</p>
+  </li>
+</ol>
+
+<p><img src="https://www.wrld3d.com/img/uploads/wrld-flight-simulator-add-rigid-body.png" alt="" /></p>
+
+<p>Now when you click <strong>Play</strong> you will see our aircraft falling towards the ground. This is because the force of gravity is pulling it downwards and we haven’t yet added opposing forces to counteract gravity and keep it in the air.</p>
+
+<p>Since our objective was to create a flying aircraft, rather than a falling stone, let’s push on to add some more forces so we can fly our aircraft around.</p>
+
+<h2 id="moving-the-aircraft-with-a-flight-model">Moving the aircraft with a flight model</h2>
+<p>Next we need to get our Aircraft moving forwards and give the player some control over its direction.</p>
+
+<p>We’re going to do this by attaching a short Script to the aircraft GameObject. This script will read input from the keyboard, calculate a force to apply to the RigidBody and then apply that force to move the aircraft around the world. We’ll call this script “AircraftController”.</p>
+
+<h4 id="attaching-the-aircraftcontroller-script">Attaching the AircraftController script</h4>
+
+<ol>
+  <li>
+    <p>Import Choose <strong>Assets → Import New Asset…</strong> from the Unity menu.</p>
+  </li>
+  <li>
+    <p>Navigate to the folder where you unzipped <strong>wrld-flight-simulator-tutorial.zip</strong>, choose the <strong>AircraftController.cs</strong> file and click <strong>Import</strong> to import it into your project.</p>
+  </li>
+  <li>
+    <p>You should now see the script appear in your Project’s Assets folder.</p>
+  </li>
+  <li>
+    <p>Now drag the AircraftController script from your Project’s <strong>Assets</strong> folder onto the <strong>Aircraft</strong> object in the <strong>Scene</strong> view.</p>
+  </li>
+  <li>
+    <p>Once you’ve done this, select the <strong>Aircraft</strong> in the <strong>Scene</strong> view and should see the AircraftController script at the bottom of the <strong>Inspector</strong> view, with a few properties like “Max Speed” which define how the aircraft should behave.</p>
+  </li>
+</ol>
+
+<p><img src="https://www.wrld3d.com/img/uploads/wrld-flight-simulator-add-aircraft-controller-script.png" alt="" /></p>
+
+<p>Now click Play and you should see the aircraft flying/falling away from you. But now you can take control with the either the <strong>cursor keys</strong> or the <strong>WASD keys</strong> to steer the aircraft away from disaster. Pressing the <strong>up</strong> or <strong>W</strong> key will cause the aircraft to pull up before it falls to the ground.</p>
+
+<p>You’ll see the aircraft soon flies off screen and becomes impossible to control. It’s still moving around somewhere out there, we just can’t see it because it is out of view of the camera. To fix this we’ll add another script to the camera so that it follows our aircraft as it flies around the world.</p>
+
+<h2 id="adding-a-follow-camera-to-keep-the-aircraft-in-view">Adding a “follow camera” to keep the aircraft in view</h2>
+
+<p>Like flight models, camera controls can get extremely complicated if we let them. But to get us started we’re going to use a simple model based on a bias function. Bias functions have a long history in game programming because they’re simple to code, cheap to compute and give a nice smooth feel to the camera movement.</p>
+
+<p>Our bias function camera controller works like this:</p>
+<ul>
+  <li>
+    <p>Compute an ideal position for the camera. In our case this will be behind and slightly above the aircraft.</p>
+  </li>
+  <li>
+    <p>Compute the difference between the camera’s current position and the ideal position.</p>
+  </li>
+  <li>
+    <p>Move the camera a fraction of the difference, so that it gets closer to the ideal position.</p>
+  </li>
+</ul>
+
+<p>By executing these steps once every frame, the camera will gradually, but not instantly, move towards its ideal position. When the camera is a long way from its ideal position it will move faster, then as it gets closer to the ideal position it will move more slowly. This gives the camera a nice smooth movement that doesn’t distract the player from the objective of the game (controlling the aircraft in this case).</p>
+
+<p>The process for adding the camera controller script is similar to the one we used for the aircraft controller, except in this case we need to attach the script to the <strong>Main Camera</strong> object instead of the aircraft.</p>
+
+<h3 id="adding-the-camera-controller-script">Adding the camera controller script</h3>
+<ol>
+  <li>
+    <p>Choose <strong>Assets → Import New Asset…</strong> from the Unity menu.</p>
+  </li>
+  <li>
+    <p>Navigate to the folder where you unzipped <strong>wrld-flight-simulator-tutorial.zip</strong>, choose the <strong>CameraController.cs</strong> file and click <strong>Import</strong> to import it into your project.</p>
+  </li>
+  <li>
+    <p>You should now see the script appear in your Project’s Assets folder.</p>
+  </li>
+  <li>
+    <p>Now drag the <strong>CameraController</strong> script from your Project’s <strong>Assets</strong> folder onto the <strong>Main Camera</strong> object in the <strong>Scene</strong> view.</p>
+  </li>
+  <li>
+    <p>Once you’ve done this, select the <strong>Main Camera</strong> in the <strong>Scene</strong> view and you should see the <strong>CameraController</strong> script at the bottom of the <strong>Inspector</strong> view, with a few properties like “Follow Bias” which define how the camera should move.</p>
+  </li>
+  <li>
+    <p>Now we need to tell the CameraController to follow our aircraft object. To do this drag the <strong>Aircraft</strong> object from the <strong>Scene</strong> view onto the <strong>CameraController’s Object To Follow</strong> property in the <strong>Inspector</strong> view.</p>
+  </li>
+</ol>
+
+<p>If you forget to do this, you will see an <strong>UnassignedReferenceException</strong> when you run the project. This is Unity’s way of telling you that a script is expecting a reference to an object, but you not have provided one.</p>
+
+<p><img src="https://www.wrld3d.com/img/uploads/wrld-flight-simulator-camera-control-script-on-camera.png" alt="" /></p>
+
+<p>Now hit Play again and you’ll see the camera start to follow the aircraft as you pilot it about. But something’s not right - the camera isn’t keeping up so the aircraft heads off into distance, leaving the camera behind.</p>
+
+<h4 id="disabling-the-wrld-built-in-camera-controls">Disabling the WRLD built-in camera controls</h4>
+<p>To fix this we need to think back to the beginning of this tutorial. Do you remember we talked about how the WRLD SDK provided built-in camera controls that allow you to move around the world? We haven’t done anything to disable these controls, so they’re going to be fighting with our new <strong>CameraController</strong> for control of the <strong>Main Camera</strong> object.</p>
+
+<p>So the camera behaviour we’re seeing is some weird combination of the WRLD built-in camera controls and our new aircraft following camera controls. To fix this we need to disable WRLD’s built-in camera controls so that the <strong>CameraController</strong> can run the show on its own.</p>
+<ol>
+  <li>
+    <p>Click on the <strong>WrldMap</strong> object in the <strong>Scene</strong> view to select it.</p>
+  </li>
+  <li>
+    <p>In the <strong>Inspector</strong> view, untick the “<strong>Use Built-in Camera Controls</strong>” checkbox to disable WRLD’s camera controls.</p>
+  </li>
+</ol>
+
+<p><img src="https://www.wrld3d.com/img/uploads/wrld-flight-simulator-camera-follow.png" alt="" /></p>
+
+<p>Now press Play again and you should see the camera behaving more sensibly, sitting more or less behind the aircraft as you pilot it around the world.</p>
+
+<h2 id="where-to-next">Where to next?</h2>
+<p>That concludes this tutorial, but there’s a whole host of things you can do from here. Here’s a few suggestions for things you might like play around with.</p>
+
+<h3 id="different-cities">Different Cities</h3>
+
+<p>Try different locations around the WRLD by setting the <strong>Start Latitude</strong> and <strong>Start Longitude</strong> properties on the <strong>WrldMap</strong> object. Here are a few you might like to try:</p>
+<ul>
+  <li>
+    <p><strong>London</strong>: 51.497980, -0.122835</p>
+  </li>
+  <li>
+    <p><strong>New York</strong>: 40.697050, -74.009341</p>
+  </li>
+</ul>
+
+<h3 id="collision-detection">Collision Detection</h3>
+<p>You’ll notice that the aircraft doesn’t react to collisions with the ground or buildings. Try enabling collision detection and reacting to collisions for a more realistic and challenging game. The <strong>Collision Settings</strong> section of the <strong>WrldMap</strong> object is a good place to start. You can find example code <a href="https://wrld3d.com/unity/latest/docs/examples/colliding-with-map-geometry/">here</a> in the WRLD SDK docs here to guide you.</p>
+
+<h3 id="pickups">Pickups</h3>
+<p>Add floating objects for the pilot to pick up as rewards. Use GameObjects for the pickups and WRLD’s <a href="https://wrld3d.com/unity/latest/docs/examples/position-object-with-geographic-transform/">GeographicTransform</a> component to position them at real world latitude / longitude positions.</p>
+
+<h3 id="different-aircraft-types">Different aircraft types</h3>
+<p>Create different aircraft behaviours by playing around with the properties of the <strong>AircraftController</strong> object. Can you make the controllers super-responsive like a stunt plane? Or slow and lumbering like a cargo carrier?</p>
+
+<h3 id="more-realistic-flight-model">More realistic flight model</h3>
+<p>Make the flight model more realistic and interesting. You’ll notice that aircraft doesn’t bank to the side when turning left or right so maybe you could add that to the flight model.</p>
+
+<p>If there’s sufficient interest in any of the above topics we’ll do a follow up post to dig into them more deeply. So <a href="http://www.twitter.com/wrld3d">let us know</a> what you’re working on with and what you’d like us to cover next. <strong>#WRLDFlightSim</strong></p>
+
+<p>And as always, you get can support by emailing <a href="mailto:support@wrld3d.com">support@wrld3d.com</a>. So just shout if you need any help and advice to get your project under way.</p>
+
+      </article>
+
+      
+        <p>
+          
+            <a href="/company/blog/collections/with/tag/blog/" class="btn btn-info btn-xs">blog</a>
+
+          
+            <a href="/company/blog/collections/with/tag/unity/" class="btn btn-info btn-xs">unity</a>
+
+          
+            <a href="/company/blog/collections/with/tag/tutorial/" class="btn btn-info btn-xs">tutorial</a>
+
+          
+        </p>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id="social-share-section">
+  <div class='shareaholic-canvas' data-app='share_buttons' data-app-id='18173503'></div>
+</section>
+
+
+      
+
+    </div>
+  </div>
+  <div class="row pagination-wrapper">
+    <div class="col-md-12">
+      
+      <div class="pull-left">
+        <a href="/blog/wrld-partners-with-atelier-de-hoteles-to-enhance-the-guest-experience/" data-toggle="tooltip" data-placement="top" title="WRLD Partners with ATELIER de Hoteles To Enhance The Guest Experience" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+          Previous post
+        </a>
+      </div>
+      
+
+      
+      <div class="pull-right">
+        <a href="/blog/3-tips-for-building-3d-maps-with-leaflet/" data-toggle="tooltip" data-placement="top" title="3 Tips for Building 3D Maps with Leaflet" class="btn btn-info btn-lg">
+          Next post
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+      </div>
+      
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      
+    </div>
+  </div>
+</div>
+
+
+
+      <div class="section fp-auto-height footer-wrapper">
+  <footer>
+    <div class="container text-center">
+      <div class="row form-group forms">
+        <div class="col-md-6 h3">
+          <label class="text-uppercase text-primary">
+            Start using our 3d maps or get in touch!
+          </label>
+          <div>
+            <span class="">
+              <a href="https://accounts.wrld3d.com/users/sign_up?plan=starter" class="btn btn-primary text-uppercase">Sign up</a>
+            </span>
+            <span class="">
+              <a href="/contact-us" class="btn btn-primary text-uppercase">Contact us</a>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6 h3">
+          <div class="newsletter-wrapper">
+            <label class="text-uppercase text-primary">
+              Sign up for our newsletter
+            </label>
+            <p>
+              We will never share any details you provide us. See our
+              <a href="/privacy-policy" alt="Privacy notice" class="text-primary">privacy notice</a>
+              for more information.
+            </p>
+            <form class="form-inline" id="newsletter">
+              <div class="form-group">
+                <input type="email" placeholder="Email" class="form-control" id="email" required>
+              </div>
+              <button type="submit" class="btn btn-default">Subscribe</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container beautiful-jekyll-footer">
+      <div class="row site-links form-group">
+      
+        
+          <div class="col-xs-6 col-md-2 col-md-offset-1">
+        
+            <h4>Platform</h4>
+            <ul class="list-unstyled">
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/3d-maps/">3D Maps</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/3d-maps/custom-maps">Custom Maps</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/3d-maps/wrld-web-app">WRLD on the Web</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/3d-maps/wrld-mobile-app">WRLD on Mobile</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/3d-maps/map-designer">Map Designer</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/3d-maps/mapping-data">Mapping Data</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/3d-maps/faq">FAQ</a>
+
+                  </li>
+                
+              
+            </ul>
+          </div>
+      
+        
+          <div class="col-xs-6 col-md-2">
+        
+            <h4>Indoors</h4>
+            <ul class="list-unstyled">
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/3d-maps/indoor-mapping">Indoor Mapping</a>
+
+                  </li>
+                
+              
+            </ul>
+          </div>
+      
+        
+          <div class="col-xs-6 col-md-2">
+        
+            <h4>Industries</h4>
+            <ul class="list-unstyled">
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/solutions">Industry Solutions</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/internet-of-things">Internet of Things</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/retail">Retail</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/commercial-real-estate">Commercial Real Estate</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/smart-workplace">Smart Workplace</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/travel">Travel</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/application-showcase">Application Showcase</a>
+
+                  </li>
+                
+              
+            </ul>
+          </div>
+      
+        
+          <div class="col-xs-6 col-md-2">
+        
+            <h4>Developers</h4>
+            <ul class="list-unstyled">
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/developers">Developers</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/wrld.js/latest/docs/examples/">Javascript Maps</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/unity/latest/docs/examples/">Unity SDK</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/android/latest/docs/examples/">Android SDK</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/ios/latest/docs/examples/">iOS SDK</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/3d-maps/virtual-reality-maps">Virtual Reality Maps</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/3d-maps/augmented-reality-3d-maps">Augmented Reality Maps</a>
+
+                  </li>
+                
+              
+            </ul>
+          </div>
+      
+        
+          <div class="col-xs-6 col-md-2">
+        
+            <h4>Pricing</h4>
+            <ul class="list-unstyled">
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/pricing/developers">Developers</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/pricing/services">WRLD Building Service</a>
+
+                  </li>
+                
+              
+            </ul>
+          </div>
+      
+        
+          <div class="col-xs-6 col-md-2">
+        
+            <h4>Company</h4>
+            <ul class="list-unstyled">
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/company/about-us">About Us</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/company/press/">Press</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/company/events/">Events</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/blog/">Blog</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/company/open-source">Open Source</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/jobs/">Jobs</a>
+
+                  </li>
+                
+              
+                
+                  <li>
+                  
+
+
+
+
+
+
+<a href="/contact-us">Contact Us</a>
+
+                  </li>
+                
+              
+            </ul>
+          </div>
+      
+      </div>
+      <div class="row form-group">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <ul class="list-inline text-center footer-links">
+            
+            <li>
+              <a href="https://www.facebook.com/wrld3d" title="Facebook">
+                <span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Facebook</span>
+              </a>
+            </li>
+            
+            
+            <li>
+              <a href="https://github.com/wrld3d" title="GitHub">
+                <span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li>
+            
+            
+            <li>
+              <a href="https://twitter.com/wrld3d" title="Twitter">
+                <span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li>
+            
+            
+            
+            
+            <li>
+              <a href="/contact-us" title="Email me">
+                <span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li>
+            
+            
+            <li>
+              <a href="https://linkedin.com/company/wrld3d" title="LinkedIn">
+                <span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">LinkedIn</span>
+              </a>
+            </li>
+            
+            
+            
+            
+            
+            
+            <li>
+              <a href="https://www.youtube.com/channel/UCCKTgCr8G8IhrjL0CPo8qKA" title="YouTube">
+                <span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">YouTube</span>
+              </a>
+            </li>
+            
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <p class="theme-by text-muted">
+            Formerly eeGeo, we’ve <a href="https://www.wrld3d.com/blog/hello-wrld/" alt="eeGeo to WRLD rebrand">rebranded</a>
+          </p>
+          <p class="theme-by text-muted">
+            <a href="/privacy-policy">Privacy</a>
+            &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <a href="/cookie-policy">Cookies</a>
+            &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <a href="/terms-of-service">Terms</a>
+            &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <a href="/legal">Legal</a>
+            &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <a href="/sitemap">Site map</a>
+          </p>
+          <p class="theme-by text-muted">
+            2022
+
+            
+            &nbsp;&bull;&nbsp;
+            <a href="https://www.wrld3d.com">wrld3d.com</a>
+            
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+
+    </div>
+    <div id="root"></div>
+    
+    
+  
+    
+  <script defer src='https://d33wubrfki0l68.cloudfront.net/bundles/89330b50dfd7a9af16c4f6b38122d4584a684408.js'></script>
+
+
+  
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+  
+	  <script src='https://d33wubrfki0l68.cloudfront.net/bundles/1f31868f7330f8e5eb662c518dbbfc508c1f54f6.js'></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#0071bc"
+    },
+    "button": {
+      "background": "#fff",
+      "text": "#237afc"
+    }
+  },
+  "position": "bottom-left",
+  "content": {
+    "message": "This website uses cookies to ensure you get the best experience on our website. To edit your cookie settings or just learn more about how we use them",
+    "href": "/cookie-policy",
+    "dismiss": "Got it!",
+    "link": "click here."
+  }
+})});
+</script>
+
+
+
+
+
+  </body>
+</html>
